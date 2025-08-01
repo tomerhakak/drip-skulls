@@ -55,8 +55,8 @@
     <div id="loading">Loading video...</div>
     
     <video id="video" autoplay muted playsinline preload="auto">
-        <source src="intro_video.mp4" type="video/mp4">
-        <source src="./intro_video.mp4" type="video/mp4">
+        <source src="intro_video.mp4?v=2025" type="video/mp4">
+        <source src="./intro_video.mp4?v=2025" type="video/mp4">
         Your browser does not support the video tag.
     </video>
     
@@ -90,7 +90,9 @@
         // Handle errors
         video.addEventListener('error', (e) => {
             console.log('🎬 Video error:', e);
-            alert('Video could not be loaded. Redirecting to main app...');
+            console.log('🎬 Video currentSrc:', video.currentSrc);
+            console.log('🎬 Video sources:', Array.from(video.querySelectorAll('source')).map(s => s.src));
+            // Try next source or redirect
             setTimeout(redirectToApp, 2000);
         });
         
