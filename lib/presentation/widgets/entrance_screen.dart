@@ -10,43 +10,10 @@ class EntranceScreen extends StatefulWidget {
 }
 
 class _EntranceScreenState extends State<EntranceScreen> {
-  bool _showVideo = false;
-
   void _startVideo() {
-    setState(() {
-      _showVideo = true;
-    });
-
-    // Create HTML video element
-    final videoElement =
-        html.VideoElement()
-          ..src = 'assets/images/יצירת_סרטון_מתסריט_ותמונה.mp4'
-          ..autoplay = true
-          ..controls = false
-          ..style.width = '100vw'
-          ..style.height = '100vh'
-          ..style.objectFit = 'cover'
-          ..style.position = 'fixed'
-          ..style.top = '0'
-          ..style.left = '0'
-          ..style.zIndex = '9999'
-          ..style.backgroundColor = 'black';
-
-    // Add video to DOM
-    html.document.body!.append(videoElement);
-
-    // Listen for video end
-    videoElement.onEnded.listen((_) {
-      // Remove video and navigate
-      videoElement.remove();
-      _navigateToUnderworld();
-    });
-
-    // Also add click to skip
-    videoElement.onClick.listen((_) {
-      videoElement.remove();
-      _navigateToUnderworld();
-    });
+    print('🎬 Redirecting to video intro page...');
+    // Redirect to dedicated video HTML page
+    html.window.location.href = './video_intro.html';
   }
 
   void _navigateToUnderworld() {

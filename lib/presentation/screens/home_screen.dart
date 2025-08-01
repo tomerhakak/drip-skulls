@@ -1,7 +1,7 @@
-import 'package:drip_skulls/presentation/widgets/hero_section.dart';
-import 'package:drip_skulls/presentation/widgets/transition_section.dart';
+import 'package:drip_skulls/presentation/widgets/entrance_screen.dart';
 import 'package:drip_skulls/presentation/widgets/underworld_section.dart';
 import 'package:flutter/material.dart';
+import 'dart:html' as html;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,19 +11,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final ScrollController _scrollController = ScrollController();
-
   @override
   Widget build(BuildContext context) {
+    // Check if we're coming back from video
+    final currentUrl = html.window.location.href;
+    final shouldShowUnderworld = currentUrl.contains('from_video=true');
+
     return Scaffold(
-      body: ListView(
-        controller: _scrollController,
-        children: [
-          HeroSection(scrollController: _scrollController),
-          const TransitionSection(),
-          const UnderworldSection(),
-        ],
-      ),
+      body:
+          shouldShowUnderworld
+              ? const UnderworldSection()
+              : const EntranceScreen(),
     );
   }
 }

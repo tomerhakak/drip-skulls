@@ -1,26 +1,4 @@
 User-agent: *
 Allow: /
 
-# Allow crawling of all content
-Disallow: 
-
-# Sitemap location
-Sitemap: https://dripskulls.com/sitemap.xml
-
-# Crawl-delay (optional, helps prevent server overload)
-Crawl-delay: 1
-
-# Allow Googlebot specifically 
-User-agent: Googlebot
-Allow: /
-
-# Allow Bingbot
-User-agent: Bingbot
-Allow: /
-
-# Block known bad bots (optional)
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: MJ12bot
-Disallow: /
+Sitemap: https://dripskullscollection.github.io/sitemap.xml
