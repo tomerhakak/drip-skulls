@@ -1,0 +1,37 @@
+{
+    "name": "Drip-Skulls 2025 | Rising from the Forgotten",
+    "short_name": "Drip-Skulls",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#2F1B14",
+    "theme_color": "#8B4513",
+    "description": "Drip-Skulls: Digital resurrection of forgotten souls in a post-collapse wasteland. Unique NFT collection featuring 164 awakened memories. Join the Underground Layer community.",
+    "orientation": "any",
+    "prefer_related_applications": false,
+    "categories": ["entertainment", "art", "games"],
+    "lang": "en",
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
