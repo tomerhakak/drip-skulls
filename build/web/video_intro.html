@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drip Skulls - Intro</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        
+        #video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            background: #000;
+        }
+        
+        #skip-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 2px solid #8B4513;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        #skip-button:hover {
+            background: rgba(139, 69, 19, 0.8);
+            transform: scale(1.05);
+        }
+        
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">Loading video...</div>
+    
+    <video id="video" autoplay muted>
+        <source src="assets/images/intro_video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <button id="skip-button" onclick="skipToApp()">Skip Intro</button>
+
+    <script>
+        const video = document.getElementById('video');
+        const loading = document.getElementById('loading');
+        const skipButton = document.getElementById('skip-button');
+        
+        console.log('🎬 Video intro page loaded');
+        
+        // Hide loading when video can play
+        video.addEventListener('canplay', () => {
+            console.log('🎬 Video can play');
+            loading.style.display = 'none';
+        });
+        
+        // When video starts playing
+        video.addEventListener('play', () => {
+            console.log('🎬 Video started playing');
+            loading.style.display = 'none';
+        });
+        
+        // When video ends, redirect to main app
+        video.addEventListener('ended', () => {
+            console.log('🎬 Video ended - redirecting to app');
+            redirectToApp();
+        });
+        
+        // Handle errors
+        video.addEventListener('error', (e) => {
+            console.log('🎬 Video error:', e);
+            alert('Video could not be loaded. Redirecting to main app...');
+            setTimeout(redirectToApp, 2000);
+        });
+        
+        // Try to start video after short delay
+        setTimeout(() => {
+            video.play().then(() => {
+                console.log('🎬 Video play() succeeded');
+                loading.style.display = 'none';
+            }).catch((error) => {
+                console.log('🎬 Video autoplay blocked:', error);
+                loading.innerHTML = 'Click anywhere to start video';
+                document.addEventListener('click', () => {
+                    video.play();
+                    loading.style.display = 'none';
+                });
+            });
+        }, 500);
+        
+        function skipToApp() {
+            console.log('🎬 Skip button clicked');
+            redirectToApp();
+        }
+        
+        function redirectToApp() {
+            console.log('🎬 Redirecting to main app...');
+            // Redirect to the main Flutter app with parameter to show underworld
+            window.location.href = './?from_video=true';
+        }
+        
+        // Allow clicking on video to skip
+        video.addEventListener('click', skipToApp);
+        
+        // Keyboard shortcut - Space or Enter to skip
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'Enter') {
+                e.preventDefault();
+                skipToApp();
+            }
+        });
+    </script>
+</body>
+</html>
