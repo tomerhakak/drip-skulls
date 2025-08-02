@@ -54,8 +54,9 @@
 <body>
     <div id="loading">Loading video...</div>
     
-    <video id="video" autoplay muted>
-        <source src="assets/images/intro_video.mp4" type="video/mp4">
+    <video id="video" autoplay muted playsinline preload="auto">
+        <source src="intro_video.mp4?v=2025" type="video/mp4">
+        <source src="./intro_video.mp4?v=2025" type="video/mp4">
         Your browser does not support the video tag.
     </video>
     
@@ -89,9 +90,14 @@
         // Handle errors
         video.addEventListener('error', (e) => {
             console.log('🎬 Video error:', e);
-            alert('Video could not be loaded. Redirecting to main app...');
+            console.log('🎬 Video currentSrc:', video.currentSrc);
+            console.log('🎬 Video sources:', Array.from(video.querySelectorAll('source')).map(s => s.src));
+            // Try next source or redirect
             setTimeout(redirectToApp, 2000);
         });
+        
+        // Force video load
+        video.load();
         
         // Try to start video after short delay
         setTimeout(() => {
@@ -101,12 +107,21 @@
             }).catch((error) => {
                 console.log('🎬 Video autoplay blocked:', error);
                 loading.innerHTML = 'Click anywhere to start video';
-                document.addEventListener('click', () => {
-                    video.play();
-                    loading.style.display = 'none';
-                });
+                loading.style.cursor = 'pointer';
+                
+                function startVideo() {
+                    video.play().then(() => {
+                        loading.style.display = 'none';
+                        document.removeEventListener('click', startVideo);
+                    }).catch((err) => {
+                        console.error('Failed to play video:', err);
+                        alert('Video failed to load. Check console for details.');
+                    });
+                }
+                
+                document.addEventListener('click', startVideo);
             });
-        }, 500);
+        }, 1000);
         
         function skipToApp() {
             console.log('🎬 Skip button clicked');
